@@ -3,15 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.dmpnv.ideapack</groupId>
-	<artifactId>ideapack-api</artifactId>
+	<artifactId>root</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ideapack-api</name>
-	<description>The ideapack's REST API specification</description>
+	<name>root</name>
+	<description>The ideapack project root</description>
 
-	<properties>
-	</properties>
-
-	<dependencies>
-	</dependencies>
+	<modules>
+		<module>ideapack-api</module>
+		<module>ideapack-api-client-java</module>
+	</modules>
 
 </project>
