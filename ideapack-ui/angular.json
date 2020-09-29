@@ -28,9 +28,13 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/scss/material-dashboard.scss",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js",
+              "node_modules/bootstrap-notify/bootstrap-notify.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -92,9 +96,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/scss/material-dashboard.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js",
+              "node_modules/bootstrap-notify/bootstrap-notify.js"
+            ]
           }
         },
         "lint": {
@@ -123,6 +131,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "ideapack-ui"
 }
