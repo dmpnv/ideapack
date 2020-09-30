@@ -4,8 +4,12 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {LayoutModule} from './layout/layout.module';
+import { LayoutModule } from './layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { ApiModule } from 'build/openapi/api.module';
+import { BASE_PATH } from '../../build/openapi';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -16,9 +20,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    ApiModule
   ],
-  providers: [],
+  providers: [{provide: BASE_PATH, useValue: environment.apiUrl}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
