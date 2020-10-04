@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiModule } from 'build/openapi/api.module';
 import { BASE_PATH } from '../../build/openapi';
 import { environment } from '../environments/environment';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { environment } from '../environments/environment';
     LayoutModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ApiModule
+    ApiModule,
+    MatTableModule
   ],
   providers: [{provide: BASE_PATH, useValue: environment.apiUrl}],
   bootstrap: [AppComponent]

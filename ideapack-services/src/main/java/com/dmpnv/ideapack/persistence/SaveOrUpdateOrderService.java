@@ -19,20 +19,28 @@ public class SaveOrUpdateOrderService {
     private MongoTemplate mongoTemplate;
 
     public Order saveOrUpdateOrder(Order order) {
-        String id = order.getId();
-        Order result;
-        if (StringUtils.isEmpty(id)) {
-            result = mongoTemplate.save(order);
-        }else {
-            Query query = new Query(Criteria.where("id").is(id));
-            Update update = new Update()
-                    .set("supplierOrderId", order.getSupplierOrderId())
-                    .set("supplier", order.getSupplier())
-                    .set("sender", order.getSender())
-                    .set("recipient", order.getRecipient());
-            FindAndModifyOptions options = new FindAndModifyOptions().returnNew(true).upsert(false);
-            result = mongoTemplate.findAndModify(query, update, options, Order.class);
+        if (StringUtils.isEmpty(order.getSupplier()) || StringUtils.isEmpty(order.getSupplierOrderId())) {
+            throw new IllegalArgumentException("Both supplier and supplierOrderId shouldn't be empty");
         }
+        String id = order.getId();
+        Query query = null;
+        if (StringUtils.isEmpty(id)) {
+            query = new Query(
+                    Criteria.where("supplier").is(order.getSupplier())
+                            .andOperator(Criteria.where("supplierOrderId").is(order.getSupplierOrderId())));
+        }else {
+            query = new Query(Criteria.where("_id").is(id));
+        }
+        Update update = new Update()
+                .set("supplierOrderId", order.getSupplierOrderId())
+                .set("supplier", order.getSupplier())
+            /*.set("sender", order.getSender())
+            .set("recipient", order.getRecipient())
+            .set("_class", Order.class.getName())*/;
+        FindAndModifyOptions options = new FindAndModifyOptions().returnNew(true).upsert(true);
+        Order result = mongoTemplate.findAndModify(query, update, options, Order.class);
+        order.setId(result.getId());
+        result = mongoTemplate.save(order);
         return result;
     }
 }
