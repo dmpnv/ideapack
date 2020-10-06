@@ -203,7 +203,52 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<!--<version>3.0.0-M5</version>-->
+				<configuration>
+					<excludes>
+						<exclude>**/*IntegrationTest.java</exclude>
+						<exclude>**/*ApplicationTest.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>build-docker-image</id>
+			<activation>
+				<property>
+					<name>buildDockerImage</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>0.34.1</version>
+						<configuration>
+							<images>
+								<image>
+									<name>ideapack/ideapack-services:latest</name>
+									<build>
+										<from>openjdk:11-jre</from>
+										<assembly>
+											<descriptorRef>artifact</descriptorRef>
+										</assembly>
+										<cmd>java -jar maven/${project.name}-${project.version}.jar --spring.profiles.active=prod</cmd>
+									</build>
+								</image>
+							</images>
+							<verbose>true</verbose>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
