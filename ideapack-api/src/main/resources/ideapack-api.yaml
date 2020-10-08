@@ -59,8 +59,7 @@ paths:
           description: Id of shipment order that needs to be fetched
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         200:
           description: successful operation
@@ -97,6 +96,39 @@ paths:
         404:
           description: Shipment order not found
           content: {}
+  /order/{supplier}/shipment:
+    put:
+      tags:
+        - order
+      summary: Save/update a shipment
+      operationId: saveShipment
+      parameters:
+        - name: supplier
+          in: path
+          description: The shipping service provider company, supplier
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Shipment'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Order'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        400:
+          description: Invalid Order
+          content: {}
+      x-codegen-request-body-name: body
 components:
   schemas:
     Order:
@@ -148,12 +180,15 @@ components:
       properties:
         id:
           type: string
+        orderId:
+          description: Id of the shipping order for which a shipment was created
+          type: string
         trackingData:
           type: string
-          description: The delivery address
-        shipmentId:
+          description: delivery address
+        shippingId:
           type: string
-        status:
+        shippingStatus:
           type: string
           description: Shipping Status
         lastUpdate:
@@ -161,24 +196,34 @@ components:
           format: date-time
         sender:
           type: string
-          description: The Sender name
+          description: Sender name
         pickupLocation:
           type: string
-          description: The Pickup location
-        deliveryEstimate:
+          description: Pickup location
+        retirementEstimate:
           type: string
           format: date-time
         recipient:
           type: string
-          description: The Recipient name
+          description: Recipient name
         recipientPhone:
           type: string
-          description: The Recipient phone number
-        destination:
+          description: Recipient phone number
+        deliveryAddr:
           type: string
-          description: The delivery address
+          description: Delivery address line
         deliveryDate:
           type: string
           format: date-time
-        shippingPrice:
-          type: number
+        destination:
+          type: string
+          description: delivery address
+        deliveryEstimate:
+          type: string
+          format: date-time
+        shippingCost:
+          type: string
+        paymentMethod:
+          type: string
+        notes:
+          type: string

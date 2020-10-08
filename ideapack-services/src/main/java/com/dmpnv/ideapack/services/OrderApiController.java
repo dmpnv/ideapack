@@ -2,7 +2,9 @@ package com.dmpnv.ideapack.services;
 
 import com.dmpnv.ideapack.api.OrderApi;
 import com.dmpnv.ideapack.model.Order;
+import com.dmpnv.ideapack.model.Shipment;
 import com.dmpnv.ideapack.persistence.SaveOrUpdateOrderService;
+import com.dmpnv.ideapack.persistence.SaveShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,12 +29,24 @@ public class OrderApiController implements OrderApi {
     public Optional<NativeWebRequest> getRequest() {
         return Optional.ofNullable(request);
     }*/
-    @Autowired
-    private SaveOrUpdateOrderService saveOrUpdateOrderService;
+    private final SaveOrUpdateOrderService saveOrUpdateOrderService;
+
+    private final SaveShipmentService saveShipmentService;
+
+    public OrderApiController(SaveOrUpdateOrderService saveOrUpdateOrderService, SaveShipmentService saveShipmentService) {
+        this.saveOrUpdateOrderService = saveOrUpdateOrderService;
+        this.saveShipmentService = saveShipmentService;
+    }
 
     @Override
     public ResponseEntity<Order> saveOrUpdateOrder(@Valid Order order) {
         Order result = saveOrUpdateOrderService.saveOrUpdateOrder(order);
+        return ResponseEntity.ok(result);
+    }
+
+    @Override
+    public ResponseEntity<Order> saveShipment(String supplier, @Valid Shipment body) {
+        Order result = saveShipmentService.saveShipment(supplier, body);
         return ResponseEntity.ok(result);
     }
 }
