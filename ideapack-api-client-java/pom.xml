@@ -143,6 +143,7 @@
 
 	<build>
 		<plugins>
+<!--
 			<plugin>
 				<groupId>io.swagger.codegen.v3</groupId>
 				<artifactId>swagger-codegen-maven-plugin</artifactId>
@@ -163,7 +164,7 @@
 					</execution>
 				</executions>
 			</plugin>
-<!--
+-->
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
@@ -174,7 +175,7 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/src/main/resources/ideapack-api.yaml</inputSpec>
+							<inputSpec>${project.basedir}/../ideapack-api/src/main/resources/ideapack-api.yaml</inputSpec>
 							<generatorName>java</generatorName>
 							<apiPackage>com.dmpnv.ideapack.api</apiPackage>
 							<modelPackage>com.dmpnv.ideapack.model</modelPackage>
@@ -183,12 +184,19 @@
 								<library>resttemplate</library>
 								<serializableModel>true</serializableModel>
 								<snapshotVersion>true</snapshotVersion>
+								<interfaceOnly>true</interfaceOnly>
+								<dateLibrary>java8</dateLibrary>
 							</configOptions>
+							<typeMappings>
+								<typeMapping>OffsetDateTime=Instant</typeMapping>
+							</typeMappings>
+							<importMappings>
+								<importMapping>java.time.OffsetDateTime=java.time.Instant</importMapping>
+							</importMappings>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
--->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

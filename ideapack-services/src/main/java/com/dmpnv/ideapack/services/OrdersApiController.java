@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -37,8 +38,8 @@ public class OrdersApiController implements OrdersApi {
     public ResponseEntity<OrderList> getOrders() {
         List<Order> orders = orderCollectionService.findOrders();
         orders.forEach(order -> {
-            order.setShipDate(OffsetDateTime.now());
-            order.setDeliveryDate(OffsetDateTime.now());
+            order.setShipDate(Instant.now());
+            order.setDeliveryDate(Instant.now());
         });
         OrderList orderList = new OrderList();
         orderList.setOrders(orders);
