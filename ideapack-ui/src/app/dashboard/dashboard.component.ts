@@ -8,7 +8,7 @@ import {OrderService} from '../../../build/openapi';
 })
 export class DashboardComponent implements OnInit {
   tableData: any;
-  displayedColumns: any = ['orderId', 'supplier', 'sender', 'recipient', 'shippingDate', 'status'];
+  displayedColumns: any = ['orderId', 'supplier', 'sender', 'recipient', 'shippingDate', 'status', 'trackingData', 'ref'];
 
   constructor(private orderService: OrderService) {
   }

@@ -28,6 +28,18 @@
             <th mat-header-cell *matHeaderCellDef> Status </th>
             <td mat-cell *matCellDef="let element"> {{element.status}} </td>
           </ng-container>
+          <ng-container matColumnDef="trackingData">
+            <th mat-header-cell *matHeaderCellDef> Tracking Data </th>
+            <td mat-cell *matCellDef="let element">
+              <a href="https://www.poste.it/cerca/index.html#/risultati-spedizioni/{{element.shipment.trackingData}}" target="_blank">{{element.shipment.trackingData}}</a>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="ref">
+            <th mat-header-cell *matHeaderCellDef> Link </th>
+            <td mat-cell *matCellDef="let element">
+              <a href="https://www.ioinvio.it/user/segui-spedizione/ordine/{{element.supplierOrderId}}" target="_blank">{{element.supplierOrderId}}</a>
+            </td>
+          </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
