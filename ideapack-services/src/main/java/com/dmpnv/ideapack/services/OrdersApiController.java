@@ -37,10 +37,10 @@ public class OrdersApiController implements OrdersApi {
     @Override
     public ResponseEntity<OrderList> getOrders() {
         List<Order> orders = orderCollectionService.findOrders();
-        orders.forEach(order -> {
+        /*orders.forEach(order -> {
             order.setShipDate(Instant.now());
             order.setDeliveryDate(Instant.now());
-        });
+        });*/
         OrderList orderList = new OrderList();
         orderList.setOrders(orders);
         return ResponseEntity.ok(orderList);

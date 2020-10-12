@@ -22,6 +22,6 @@ public class OrderCollectionService {
     private OrderRepository orderRepository;
 
     public List<Order> findOrders() {
-        return orderRepository.findAll();
+        return orderRepository.findAllByOrderByDeliveryDateDesc();
     }
 }
