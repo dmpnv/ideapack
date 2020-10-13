@@ -32,15 +32,20 @@ public class SaveOrUpdateOrderService {
             query = new Query(Criteria.where("_id").is(id));
         }
         Update update = new Update()
-                .set("supplierOrderId", order.getSupplierOrderId())
-                .set("supplier", order.getSupplier())
-            /*.set("sender", order.getSender())
-            .set("recipient", order.getRecipient())
-            .set("_class", Order.class.getName())*/;
+                .set("sender", order.getSender())
+                .set("recipient", order.getRecipient())
+                .set("quantity", order.getQuantity())
+                .set("shipDate", order.getShipDate())
+                .set("deliveryDate", order.getDeliveryDate())
+                .set("_class", Order.class.getName());
+        if (StringUtils.isEmpty(id)) {
+            update = update.set("supplierOrderId", order.getSupplierOrderId())
+                            .set("supplier", order.getSupplier());
+        }
         FindAndModifyOptions options = new FindAndModifyOptions().returnNew(true).upsert(true);
         Order result = mongoTemplate.findAndModify(query, update, options, Order.class);
-        order.setId(result.getId());
-        result = mongoTemplate.save(order);
+        /*order.setId(result.getId());
+        result = mongoTemplate.save(order);*/
         return result;
     }
 }
